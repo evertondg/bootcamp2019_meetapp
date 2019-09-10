@@ -38,7 +38,7 @@
 [issues-shield]: https://img.shields.io/github/issues/evertondg/bootcamp2019_meetapp.svg?style=flat-square
 [issues-url]: https://github.com/evertondg/bootcamp2019_meetapp/issues
 [license-shield]: https://img.shields.io/github/license/evertondg/bootcamp2019_meetapp.svg?style=flat-square
-[license-url]: https://github.com/evertondg/bootcamp2019_meetapp/blob/master/LICENSE.txt
+[license-url]: https://github.com/evertondg/bootcamp2019_meetapp/blob/master/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=flat-square&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/evertondegrande/
 [product-screenshot]: images/screenshot.png
