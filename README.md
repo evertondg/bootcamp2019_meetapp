@@ -35,10 +35,10 @@
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
-[issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=flat-square
+[issues-shield]: https://img.shields.io/github/issues/evertondg/bootcamp2019_meetapp.svg?style=flat-square
 [issues-url]: https://github.com/evertondg/bootcamp2019_meetapp/issues
-[license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=flat-square
-[license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
+[license-shield]: https://img.shields.io/github/license/evertondg/bootcamp2019_meetapp.svg?style=flat-square
+[license-url]: https://github.com/evertondg/bootcamp2019_meetapp/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=flat-square&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/evertondegrande/
 [product-screenshot]: images/screenshot.png
