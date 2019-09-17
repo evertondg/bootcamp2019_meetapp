@@ -1,7 +1,9 @@
-import { isBefore } from 'date-fns';
+import { isBefore, format } from 'date-fns';
+import pt from 'date-fns/locale/pt';
 import Subscription from '../models/SubscriptionMeetup';
 import User from '../models/User';
 import Meetup from '../models/Meetup';
+import Notification from '../schemas/Notification';
 
 class SubscriptionController {
   async store(req, res) {
@@ -10,7 +12,7 @@ class SubscriptionController {
       include: [
         {
           model: User,
-          attributes: ['name', 'email'],
+          attributes: ['name', 'email', 'id'],
         },
       ],
     });
@@ -47,6 +49,19 @@ class SubscriptionController {
     const subscription = await Subscription.create({
       user_id: user.id,
       meetup_id: meetup.id,
+    });
+
+    const formattedDate = format(
+      meetup.date,
+      "'dia' dd 'de' MMMM', às' H:mm'h'  ",
+      {
+        locale: pt,
+      }
+    );
+
+    await Notification.create({
+      content: `Novo Agendamento de ${user.name} em seu meetup ${formattedDate}`,
+      user: meetup.user_id,
     });
 
     return res.json(subscription);
