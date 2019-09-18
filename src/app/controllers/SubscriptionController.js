@@ -4,6 +4,7 @@ import Subscription from '../models/SubscriptionMeetup';
 import User from '../models/User';
 import Meetup from '../models/Meetup';
 import Notification from '../schemas/Notification';
+import Mail from '../../lib/Mail';
 
 class SubscriptionController {
   async store(req, res) {
@@ -64,7 +65,19 @@ class SubscriptionController {
       user: meetup.user_id,
     });
 
-    return res.json(subscription);
+    await Mail.sendMail({
+      to: `${meetup.User.name} <${meetup.User.email}>`,
+      subject: `Inscrição de ${user.name} no meetup ${meetup.title}`,
+      template: 'register',
+      context: {
+        organizer: meetup.User.name,
+        user: user.name,
+        title: meetup.title,
+        date: formattedDate,
+      },
+    });
+
+    return res.json({ subscription, meetup });
   }
 }
 
