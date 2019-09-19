@@ -4,7 +4,10 @@ import Subscription from '../models/SubscriptionMeetup';
 import User from '../models/User';
 import Meetup from '../models/Meetup';
 import Notification from '../schemas/Notification';
-import Mail from '../../lib/Mail';
+// import Mail from '../../lib/Mail';
+
+import SubscriptionMail from '../jobs/SubscriptionMail';
+import Queue from '../../lib/Queue';
 
 class SubscriptionController {
   async store(req, res) {
@@ -65,15 +68,25 @@ class SubscriptionController {
       user: meetup.user_id,
     });
 
-    await Mail.sendMail({
-      to: `${meetup.User.name} <${meetup.User.email}>`,
-      subject: `Inscrição de ${user.name} no meetup ${meetup.title}`,
-      template: 'register',
-      context: {
+    // await Mail.sendMail({
+    //   to: `${meetup.User.name} <${meetup.User.email}>`,
+    //   subject: `Inscrição de ${user.name} no meetup ${meetup.title}`,
+    //   template: 'register',
+    //   context: {
+    //     organizer: meetup.User.name,
+    //     user: user.name,
+    //     title: meetup.title,
+    //     date: formattedDate,
+    //   },
+    // });
+
+    Queue.add(SubscriptionMail.key, {
+      registered: {
         organizer: meetup.User.name,
+        organizer_mail: meetup.User.email,
+        meetup: meetup.title,
+        meetup_date: formattedDate,
         user: user.name,
-        title: meetup.title,
-        date: formattedDate,
       },
     });
 
