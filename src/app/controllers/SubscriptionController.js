@@ -1,3 +1,4 @@
+import { Op } from 'sequelize';
 import { isBefore, format } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 import Subscription from '../models/SubscriptionMeetup';
@@ -10,6 +11,44 @@ import SubscriptionMail from '../jobs/SubscriptionMail';
 import Queue from '../../lib/Queue';
 
 class SubscriptionController {
+  async index(req, res) {
+    const page = 1;
+    const subscribed = await Subscription.findAll({
+      where: {
+        user_id: req.userId,
+      },
+      include: [
+        {
+          model: Meetup,
+          attributes: ['title', 'date', 'id'],
+          include: [
+            {
+              model: User,
+              attributes: ['id', 'name'],
+            },
+          ],
+          where: {
+            date: { [Op.gt]: new Date() },
+          },
+        },
+        {
+          model: User,
+          attributes: ['id', 'name'],
+        },
+      ],
+      limit: 20,
+      offset: (page - 1) * 20,
+      attributes: ['id', 'user_id', 'meetup_id'],
+      order: [[Meetup, 'date']],
+    });
+
+    // if (isBefore(subscribed.Meetup.date, new Date())) {
+    //   return res.status(400).json({ error: "You don't have sign old meetups" });
+    // }
+
+    return res.json(subscribed);
+  }
+
   async store(req, res) {
     const user = await User.findByPk(req.userId);
     const meetup = await Meetup.findByPk(req.params.meetupId, {
